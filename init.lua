@@ -1,3 +1,5 @@
-require("core.options")
-require("core.keybinds")
-require("core.lsp")
+-- Main configuration Neovim
+-- Autor: Carlos
+
+require('core.options')
+require('core.keymaps')
