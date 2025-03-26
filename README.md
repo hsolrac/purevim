@@ -16,34 +16,22 @@ A clean, efficient Neovim configuration that leverages built-in features and pow
 - [x] Intuitive keymaps
 - [ ] Native LSP support
 - [ ] Useful autocommands
-- [ ] Fast file finder (fzf + fd)
-- [ ] Powerful text search (ripgrep + fzf)
+- [ ] Fast file finder 
+- [ ] Powerful text search 
 
 ## Requirements
 
-- Neovim >= 0.8.0
+- Neovim >= 0.10.0
 - A terminal with true color support
-- ripgrep (rg)
-- fzf
-- fd
 
 ## Installation
 
-1. Install required tools:
-```bash
-# Arch Linux
-sudo pacman -S ripgrep fzf fd bat
-
-# Ubuntu/Debian
-sudo apt install ripgrep fzf fd-find bat
-```
-
-2. Backup your existing Neovim configuration:
+1. Backup your existing Neovim configuration:
 ```bash
 mv ~/.config/nvim ~/.config/nvim.backup
 ```
 
-3. Clone this repository:
+2. Clone this repository:
 ```bash
 git clone https://github.com/yourusername/purevim.git ~/.config/nvim
 ```
