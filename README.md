@@ -14,7 +14,7 @@ A clean, efficient Neovim configuration that leverages built-in features and pow
 ## Features
 
 - [x] Intuitive keymaps
-- [ ] Native LSP support
+- [x] Native LSP support
 - [ ] Useful autocommands
 - [ ] Fast file finder 
 - [ ] Powerful text search 
@@ -52,7 +52,6 @@ This configuration is designed to be lightweight and fast:
 - Lazy redraw enabled
 - Optimized updatetime
 - Efficient autocommands
-- Fast external tools (ripgrep, fzf, fd)
 
 ## Contributing
 
