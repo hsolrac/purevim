@@ -23,6 +23,7 @@ A clean, efficient Neovim configuration that leverages built-in features and pow
 
 - Neovim >= 0.10.0
 - A terminal with true color support
+- LSP servers for your languages
 
 ## Installation
 
@@ -31,7 +32,7 @@ A clean, efficient Neovim configuration that leverages built-in features and pow
 mv ~/.config/nvim ~/.config/nvim.backup
 ```
 
-2. Clone this repository:
+3. Clone this repository:
 ```bash
 git clone https://github.com/yourusername/purevim.git ~/.config/nvim
 ```

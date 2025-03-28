@@ -1,13 +1,30 @@
----@type vim.lsp.Config
 return {
-    cmd = { "sumneko" },
-    root_markers = { ".luarc.json", ".luarc.jsonc", ".luacheckrc", ".stylua.toml", "stylua.toml", "selene.toml", "selene.yml", ".git" },
-    filetypes = { "lua" },
-		settings = {
-          Lua = {
-            runtime = {
-              version = 'LuaJIT',
-            }
-          }
-        }
-}
+	name = "lua_ls",
+	cmd = { "lua-language-server" },
+	root_dir = vim.fs.dirname(vim.fs.find({ "lua_ls.json", ".git" }, { upward = true })[1]),
+	capabilities = vim.lsp.protocol.make_client_capabilities(),
+	settings = {
+		Lua = {
+			runtime = {
+				version = "Lua5.4",
+				path = vim.split(package.path, ";"),
+			},
+			diagnostics = {
+				enable = true,
+				disable = { "undefined-field" },
+				globals = { "vim" },
+			},
+			workspace = {
+				library = {
+					[vim.fn.expand "$VIMRUNTIME/lua"] = true,
+					[vim.fn.expand "$VIMRUNTIME/lua/vim/lsp"] = true,
+				},
+				maxPreload = 100000,
+				preloadFileSize = 10000,
+			},
+			telemetry = {
+				enable = false,
+			},
+		},
+	},
+} 
