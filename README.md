@@ -16,8 +16,8 @@ A clean, efficient Neovim configuration that leverages built-in features and pow
 - [x] Intuitive keymaps
 - [x] Native LSP support
 - [ ] Useful autocommands
-- [ ] Fast file finder 
-- [ ] Powerful text search 
+- [ ] File finder 
+- [ ] Text search 
 
 ## Requirements
 
