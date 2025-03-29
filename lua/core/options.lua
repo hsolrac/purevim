@@ -4,6 +4,7 @@ local g = vim.g
 g.mapleader = ' '
 g.maplocalleader = ' '
 
+opt.updatetime = 1000
 opt.number = true
 opt.signcolumn = 'yes'
 opt.termguicolors = true
