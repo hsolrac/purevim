@@ -1,0 +1,7 @@
+{
+    "diagnostics.disable": [
+        "undefined-field",
+        "unused-local",
+        "deprecated"
+    ]
+}

@@ -22,19 +22,17 @@ end
 
 local servers = {
 	lua_ls = require("lsp.lua_ls"),
-	pyright = require("lsp.python"),
 	tsserver = require("lsp.typescript"),
 	rust_analyzer = require("lsp.rust")
 }
 
--- Inicia um servidor LSP específico
 local function start_server(name)
 	local server = servers[name]
 	if not server then return end
 
 	if not is_executable(server.cmd) then
 		vim.notify(string.format("Server LSP '%s' not found", name),
-		vim.log.levels.WARN)
+			vim.log.levels.WARN)
 		return
 	end
 
@@ -48,10 +46,7 @@ local function start_server(name)
 end
 
 function M.setup()
-	setup_diagnostics()  
-
-	local ft = vim.bo.filetype
-	if ft == "" or ft == "help" then return end
+	setup_diagnostics()
 
 	for name, _ in pairs(servers) do
 		start_server(name)
