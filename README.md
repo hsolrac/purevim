@@ -25,7 +25,13 @@ A clean, efficient Neovim configuration that leverages built-in features and pow
 
 - [x] Intuitive keymaps
 - [x] Native LSP support
+  - [x] Go to definition: `gd`
+  - [x] Show documentation: `K`
+  - [x] Rename symbol: `<leader>rn`
+  - [x] Code actions: `<leader>ca`
 - [x] Useful autocommands
+  - [x] Diagnostics float mouse hover
+  - [x] autoformat
 - [ ] File finder 
 - [ ] Text search 
 
@@ -46,13 +52,6 @@ mv ~/.config/nvim ~/.config/nvim.backup
 ```bash
 git clone https://github.com/yourusername/purevim.git ~/.config/nvim
 ```
-
-### LSP Features
-
-- Go to definition: `gd`
-- Show documentation: `K`
-- Rename symbol: `<leader>rn`
-- Code actions: `<leader>ca`
 
 ## Performance
 
