@@ -59,7 +59,7 @@ vim.api.nvim_create_autocmd({"CursorHold", "CursorHoldI"}, {
 vim.api.nvim_create_autocmd({"BufEnter"}, {
   pattern = {"*"},
   callback = function(args)
-    if vim.bo[args.buf].filetype ~= "" then  -- Só executa para buffers válidos
+    if vim.bo[args.buf].filetype ~= "" then
       lsp.setup()
     end
   end

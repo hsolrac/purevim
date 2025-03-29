@@ -1,0 +1,37 @@
+{
+  "Lua": {
+    "runtime": {
+      "version": "Lua5.4",  
+      "path": [
+        "?.lua",
+        "?/init.lua",
+        "lua/?.lua",
+        "lua/?/init.lua"
+      ]
+    },
+    "workspace": {
+      "library": {
+        ["vim.fn.expand("$VIMRUNTIME/lua")"]: true,
+        ["vim.fn.stdpath("config")", .. "/lua"]: true  
+      },
+      "checkThirdParty": false  
+    },
+    "diagnostics": {
+      "enable": true,
+      "globals": ["vim"],  
+      "disable": ["unused-local", "unused-var"]  
+    },
+    "completion": {
+      "callSnippet": "Replace",  
+      "keywordSnippet": "Disable"
+    },
+    "format": {
+      "enable": true,
+      "defaultConfig": {
+        "indent_style": "space",
+        "indent_size": "2",  
+        "quote_style": "single"  
+      }
+    }
+  }
+}
