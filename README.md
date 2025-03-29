@@ -14,6 +14,11 @@ A clean, efficient Neovim configuration that leverages built-in features and pow
 ![image](https://github.com/user-attachments/assets/754119f0-42fa-4dcc-ade0-45e5eb4ac7ca)
 ![image](https://github.com/user-attachments/assets/838a282a-6df9-4f10-b998-58c80ab433b3)
 
+> [!WARNING]  
+> **Incomplete Setup**  
+> This configuration is not yet production-ready.  
+> • Pending LSP adjustments  
+> • Runtime path errors detected  
 
 
 ## Features
