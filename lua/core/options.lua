@@ -31,3 +31,5 @@ opt.completeopt = 'menu,menuone,noselect'
 
 opt.lazyredraw = true
 opt.hidden = true
+-- see `:h completeopt`
+opt.completeopt = "menuone,noselect,popup,fuzzy"
