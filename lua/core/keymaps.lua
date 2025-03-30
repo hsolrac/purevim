@@ -39,3 +39,11 @@ map("n", "<leader>f", vim.lsp.buf.format, bufopts)
 map("n", "[d", vim.diagnostic.goto_prev, bufopts)
 map("n", "]d", vim.diagnostic.goto_next, bufopts)
 map("n", "<leader>d", vim.diagnostic.open_float, bufopts)
+
+-- map <c-space> to activate completion
+map("i", "<c-space>", function() vim.lsp.completion.get() end)
+-- select with Enter
+map("i", "<cr>", "pumvisible() ? '<c-y>' : '<cr>'", { expr = true })
+-- navigation sugestions with Tab(next) and Shift + Tab(prev)
+map("i", "<Tab>", "pumvisible() ? '<C-n>' : '<Tab>'", { expr = true, noremap = true, silent = true })
+map("i", "<S-Tab>", "pumvisible() ? '<C-p>' : '<S-Tab>'", { expr = true, noremap = true, silent = true })
