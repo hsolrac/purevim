@@ -20,36 +20,60 @@ local function is_executable(cmd)
 	return vim.fn.executable(cmd[1]) == 1
 end
 
+local function file_exists(pattern)
+	return vim.fn.glob(pattern) ~= ""
+end
+
 local servers = {
-	lua_ls = require("lsp.lua_ls"),
-	tsserver = require("lsp.typescript"),
-	rust_analyzer = require("lsp.rust")
+	lua_ls = {
+		config = require("lsp.lua_ls"),
+		filetype = "lua"
+	},
+	tsserver = {
+		config = require("lsp.typescript"),
+		filetype = {
+			"javascript",
+			"javascriptreact",
+			"javascript.jsx",
+			"typescript",
+			"typescriptreact",
+			"typescript.tsx",
+		}
+	},
+	rust_analyzer = {
+		config = require("lsp.rust"),
+		filetype = "rust"
+	}
 }
 
-local function start_server(name)
-	local server = servers[name]
-	if not server then return end
+local function start_server(name, server)
+	if not server or not server.config then return end
 
-	if not is_executable(server.cmd) then
+	if not is_executable(server.config.cmd) then
 		vim.notify(string.format("Server LSP '%s' not found", name),
 			vim.log.levels.WARN)
 		return
 	end
 
-	vim.lsp.start({
-		name = server.name,
-		cmd = server.cmd,
-		root_dir = server.root_dir,
-		capabilities = server.capabilities,
-		settings = server.settings,
+	vim.api.nvim_create_autocmd("FileType", {
+		pattern = server.filetype,
+		callback = function()
+			vim.lsp.start({
+				name = server.config.name,
+				cmd = server.config.cmd,
+				root_dir = server.config.root_dir,
+				capabilities = server.config.capabilities,
+				settings = server.config.settings,
+			})
+		end,
 	})
 end
 
 function M.setup()
 	setup_diagnostics()
 
-	for name, _ in pairs(servers) do
-		start_server(name)
+	for name, server in pairs(servers) do
+		start_server(name, server)
 	end
 end
 

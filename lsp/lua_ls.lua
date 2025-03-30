@@ -1,5 +1,6 @@
 return {
 	name = "lua_ls",
+	filesType = { "lua" },
 	cmd = { "lua-language-server" },
 	root_dir = vim.fs.dirname(vim.fs.find({ "lua_ls.json", ".git" }, { upward = true })[1]),
 	capabilities = vim.lsp.protocol.make_client_capabilities(),
