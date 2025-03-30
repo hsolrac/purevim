@@ -31,6 +31,7 @@ A clean, efficient Neovim configuration that leverages built-in features and pow
   - [x] Show documentation: `K`
   - [x] Rename symbol: `<leader>rn`
   - [x] Code actions: `<leader>ca`
+  - [x] Autocomplete
 - [x] Useful autocommands
   - [x] Diagnostics float mouse hover
   - [x] autoformat
