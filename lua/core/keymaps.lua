@@ -5,7 +5,7 @@ local bufopts = { noremap = true, silent = true }
 -- Quality of life
 
 map("n", "<C-s>", ":w<CR>")
-map("n", "<Esc>", ":noh<CR>", {silent = true })
+map("n", "<Esc>", ":noh<CR>", { silent = true })
 
 map("v", "J", ":m '>+1<CR>gv=gv")
 map("v", "K", ":m '<-2<CR>gv=gv")
@@ -39,24 +39,29 @@ map("n", "]d", function()
 	vim.diagnostic.jump({ count = 1, float = true })
 end)
 
-
 -- Search (find and grep)
-local map = vim.keymap.set
 map("n", "<leader>ff", ":find ")
 map("n", "<leader>vv", ":vert sf ")
 map("n", "<leader>b", ":b ")
 map("n", "<leader>fq", ":Findqf ")
-map("n", "<leader>g", ":grep ''<left>")
-map("n", "<leader>G", ":grep <C-R><C-W><CR>")
+map("n", "<leader>g", ":silent! grep ''<Left>", { desc = "Grep manually" })
+map("n", "<leader>G", ":silent! grep <C-R><C-W><CR>", { desc = "Grep word under cursor" })
 map("n", "<leader>z", ":Zgrep ")
 map("n", "<leader>Z", ":Fzfgrep ")
 map("n", "<leader>cf", ":Cfilter ")
 map("n", "<leader>cz", ":Cfuzzy ")
-vim.keymap.set("c", "<C-Space>", ".*", { noremap = true })
-vim.keymap.set("c", "<A-9>", "\\(", { noremap = true })
-vim.keymap.set("c", "<A-0>", "\\)", { noremap = true })
-vim.keymap.set("c", "<A-Space>", "\\<space>", { noremap = true })
+map("c", "<C-Space>", ".*", { noremap = true })
+map("c", "<A-9>", "\\(", { noremap = true })
+map("c", "<A-0>", "\\)", { noremap = true })
+map("c", "<A-Space>", "\\<space>", { noremap = true })
 
+-- Automatically open quickfixlist after grep
+vim.api.nvim_create_autocmd("QuickFixCmdPost", {
+	pattern = "[^l]*",
+	callback = function()
+		vim.cmd("copen")
+	end,
+})
 
 -- LSP
 map("n", "gd", vim.lsp.buf.definition, bufopts)
