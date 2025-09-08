@@ -43,6 +43,74 @@ end)
 -- TODO: make all these git functions into its own git.lua
 --       then come back and set only the bindings, like to :PureGitStatus
 map("n", "<leader>gL", ":PureLazyGit<CR>")
+map("n", "<leader>gs", ":horizontal new | :terminal git status --short<CR>")
+
+map("n", "<leader>gd", function()
+  local file = vim.fn.expand("%")
+  if file == "" then
+    vim.notify("No file name for current buffer", vim.log.levels.WARN)
+    return
+  end
+
+  local buf = vim.api.nvim_create_buf(false, true) 
+  vim.cmd("vsplit")                               
+  vim.api.nvim_win_set_buf(0, buf)
+
+  local diff = vim.fn.systemlist("git diff " .. file)
+  if vim.v.shell_error ~= 0 then
+    vim.notify("git diff failed or repo not found", vim.log.levels.WARN)
+    return
+  end
+  vim.api.nvim_buf_set_lines(buf, 0, -1, false, diff)
+
+  vim.bo[buf].filetype = "diff"
+  vim.bo[buf].buflisted = false
+  vim.bo[buf].modifiable = false
+  vim.bo[buf].bufhidden = "wipe"
+end, { desc = "Git diff current file in disposable buffer" })
+
+map("n", "<leader>gD", function()
+  local buf = vim.api.nvim_create_buf(false, true)
+  vim.cmd("vsplit")
+  vim.api.nvim_win_set_buf(0, buf)
+
+  local diff = vim.fn.systemlist("git diff")
+  if vim.v.shell_error ~= 0 then
+    vim.notify("git diff failed or repo not found", vim.log.levels.WARN)
+    return
+  end
+  vim.api.nvim_buf_set_lines(buf, 0, -1, false, diff)
+
+  vim.bo[buf].filetype = "diff"
+  vim.bo[buf].buflisted = false
+  vim.bo[buf].modifiable = false
+  vim.bo[buf].bufhidden = "wipe"
+end, { desc = "Git diff entire repo in disposable buffer" })
+
+map("n", "<leader>ga", function()
+  local file = vim.fn.expand("%")
+  if file == "" then
+    vim.notify("No file name for current buffer", vim.log.levels.WARN)
+    return
+  end
+
+  local buf = vim.api.nvim_create_buf(false, true)
+
+  local annotate = vim.fn.systemlist("git annotate " .. file)
+  if vim.v.shell_error ~= 0 then
+    vim.notify("git annotate failed or repo not found", vim.log.levels.WARN)
+    return
+  end
+
+  vim.api.nvim_buf_set_lines(buf, 0, -1, false, annotate)
+  vim.bo[buf].filetype = "git" 
+  vim.bo[buf].modifiable = true
+  vim.bo[buf].buflisted = false
+
+  vim.api.nvim_command("topleft vsplit")
+  vim.api.nvim_win_set_buf(0, buf)
+end, { desc = "Git annotate current file in new left buffer" })
+
 -- Search (find and grep)
 map("n", "<leader>ff", ":find ")
 map("n", "<leader>vv", ":vert sf ")
