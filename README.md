@@ -37,6 +37,14 @@ A clean, efficient Neovim configuration that leverages built-in features and pow
 - [x] File finder
 - [x] Text search
 
+## TODOs
+- [ ] Look for TODOs in the code
+- [ ] Document how to install tree-sitter libraries
+- [ ] Document how to install supported LSP servers
+- [ ] Document how to add new LSP servers
+- [ ] Document how to "auto complete"
+- [ ] Document default bindings
+
 ## Requirements
 
 - Neovim >= 0.10.0
@@ -69,6 +77,27 @@ This configuration is designed to be lightweight and fast:
 ## Contributing
 
 Feel free to fork this repository and customize it to your needs. Pull requests for improvements are welcome!
+
+## FAQ
+
+### Do folds work with tree-sitter?
+Yes!
+
+Here are some folding key hints:
+- zc (fold)
+- zo (unfold)
+- zM (fold all)
+- zR (unfold all)
+- za (toggle current fold)
+
+### How do I check if treesitter is turned on on my current buffer?
+
+Focus the buffer you'd like more info to and run the command:
+
+```
+:PureCheckTreesitter
+```
+
 
 ## License
 
