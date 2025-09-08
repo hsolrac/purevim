@@ -39,6 +39,10 @@ map("n", "]d", function()
 	vim.diagnostic.jump({ count = 1, float = true })
 end)
 
+-- Git related
+-- TODO: make all these git functions into its own git.lua
+--       then come back and set only the bindings, like to :PureGitStatus
+map("n", "<leader>gL", ":PureLazyGit<CR>")
 -- Search (find and grep)
 map("n", "<leader>ff", ":find ")
 map("n", "<leader>vv", ":vert sf ")
