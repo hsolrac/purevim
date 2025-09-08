@@ -51,7 +51,7 @@ local function start_server(name, server)
 
 	if not is_executable(server.config.cmd) then
 		vim.notify(string.format("Server LSP '%s' not found", name),
-			vim.log.levels.WARN)
+			vim.log.levels.DEBUG)
 		return
 	end
 

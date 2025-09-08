@@ -20,8 +20,7 @@ A clean, efficient Neovim configuration that leverages built-in features and pow
 > **Incomplete Setup**  
 > This configuration is not yet production-ready.  
 > • Pending LSP adjustments  
-> • Runtime path errors detected  
-
+> • Runtime path errors detected
 
 ## Features
 
@@ -35,8 +34,8 @@ A clean, efficient Neovim configuration that leverages built-in features and pow
 - [x] Useful autocommands
   - [x] Diagnostics float mouse hover
   - [x] autoformat
-- [ ] File finder 
-- [ ] Text search 
+- [x] File finder
+- [x] Text search
 
 ## Requirements
 
@@ -47,11 +46,13 @@ A clean, efficient Neovim configuration that leverages built-in features and pow
 ## Installation
 
 1. Backup your existing Neovim configuration:
+
 ```bash
 mv ~/.config/nvim ~/.config/nvim.backup
 ```
 
 3. Clone this repository:
+
 ```bash
 git clone https://github.com/yourusername/purevim.git ~/.config/nvim
 ```
@@ -75,4 +76,4 @@ MIT License - feel free to use and modify as you like.
 
 ---
 
-Made with love by a Neovim enthusiast 
+Made with love by a Neovim enthusiast
