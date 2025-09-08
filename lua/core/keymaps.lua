@@ -2,7 +2,7 @@ local map = vim.keymap.set
 local search = require("core.search")
 local bufopts = { noremap = true, silent = true }
 
--- Quality of life
+-- Quality of life maps
 
 map("n", "<C-s>", ":w<CR>")
 map("n", "<Esc>", ":noh<CR>", { silent = true })
@@ -28,6 +28,21 @@ map("n", "<S-l>", ":bnext<CR>")
 map("n", "<S-h>", ":bprevious<CR>")
 map("n", "<C-q>", ":bd<CR>")
 
+
+map("n", "n", "nzzzv", { desc = "Next search result (centered)" })
+map("n", "N", "Nzzzv", { desc = "Previous search result (centered)" })
+
+map({ "n", "v" }, "<C-d>", "<C-d>zz", { silent = true })
+map({ "n", "v" }, "<C-u>", "<C-u>zz", { silent = true })
+
+map("n", "<A-j>", ":m .+1<CR>==", { desc = "Move line down" })
+map("n", "<A-k>", ":m .-2<CR>==", { desc = "Move line up" })
+map("v", "<A-j>", ":m '>+1<CR>gv=gv", { desc = "Move selection down" })
+map("v", "<A-k>", ":m '<-2<CR>gv=gv", { desc = "Move selection up" })
+
+map("v", "<", "<gv", { desc = "Indent left and reselect" })
+map("v", ">", ">gv", { desc = "Indent right and reselect" })
+
 map("n", "<leader>q", ":copen <CR>")
 map("n", "]q", ":cnext<CR>", { silent = true })
 map("n", "[q", ":cprev<CR>", { silent = true })
@@ -38,6 +53,33 @@ end)
 map("n", "]d", function()
 	vim.diagnostic.jump({ count = 1, float = true })
 end)
+
+map("n", "<leader>bx", ":bd<CR>", { desc = "Close buffer", silent = true })
+map("n", "<leader>bX", ":bufdo bd<CR>", { desc = "Close all buffers", silent = true })
+
+map("n", "<leader>tn", ":tabnew<CR>", { desc = "Toggle [t]abs" })
+map("n", "<leader>tt", function()
+	if vim.o.showtabline == 2 then
+		vim.o.showtabline = 0
+	else
+		vim.o.showtabline = 2
+	end
+end, { desc = "Toggle [t]abs" })
+map("n", "]t", ":tabnext<CR>", { desc = "Next tab", silent = true })
+map("n", "[t", ":tabprevious<CR>", { desc = "Previous tab", silent = true })
+
+map("n", "<leader>ti", function()
+	local virtual_text = vim.diagnostic.config().virtual_text
+	vim.diagnostic.config({ virtual_text = not virtual_text })
+end, { desc = "Toggle [i]nline diagnostics" })
+
+map("n", "<leader>td", function()
+	vim.diagnostic.enable(not vim.diagnostic.is_enabled())
+end, { desc = "Toggle [d]iagnostics" })
+
+map("n", "<leader>tl", ":set number! norelativenumber<CR>", {desc = "Toggle [l]ine number" })
+map("n", "<leader>tr", ":set relativenumber!<CR>", {desc = "Toggle [r]elative line number" })
+
 
 -- Git related
 -- TODO: make all these git functions into its own git.lua
