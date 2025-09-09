@@ -10,9 +10,11 @@ map("n", "<Esc>", ":noh<CR>", { silent = true })
 map("v", "J", ":m '>+1<CR>gv=gv")
 map("v", "K", ":m '<-2<CR>gv=gv")
 
-map("n", "<leader>e", ":Explore <CR>")
+map("n", "<leader>ee", ":Explore <CR>")
 
-map("n", "<leader>ev", ":vsplit ~/.config/purevim<cr>")
+map("n", "<leader>ev", function()
+	vim.cmd("vsplit " .. vim.env.MYVIMRC)
+end, { desc = "Open init.lua in vertical split" })
 
 map("n", "<C-h>", "<C-w>h")
 map("n", "<C-j>", "<C-w>j")
@@ -27,7 +29,6 @@ map("n", "<C-Right>", ":vertical resize +2<CR>")
 map("n", "<S-l>", ":bnext<CR>")
 map("n", "<S-h>", ":bprevious<CR>")
 map("n", "<C-q>", ":bd<CR>")
-
 
 map("n", "n", "nzzzv", { desc = "Next search result (centered)" })
 map("n", "N", "Nzzzv", { desc = "Previous search result (centered)" })
@@ -77,9 +78,8 @@ map("n", "<leader>td", function()
 	vim.diagnostic.enable(not vim.diagnostic.is_enabled())
 end, { desc = "Toggle [d]iagnostics" })
 
-map("n", "<leader>tl", ":set number! norelativenumber<CR>", {desc = "Toggle [l]ine number" })
-map("n", "<leader>tr", ":set relativenumber!<CR>", {desc = "Toggle [r]elative line number" })
-
+map("n", "<leader>tl", ":set number! norelativenumber<CR>", { desc = "Toggle [l]ine number" })
+map("n", "<leader>tr", ":set relativenumber!<CR>", { desc = "Toggle [r]elative line number" })
 
 -- Git related
 -- TODO: make all these git functions into its own git.lua
@@ -88,78 +88,81 @@ map("n", "<leader>gL", ":PureLazyGit<CR>")
 map("n", "<leader>gs", ":horizontal new | :terminal git status --short<CR>")
 
 map("n", "<leader>gd", function()
-  local file = vim.fn.expand("%")
-  if file == "" then
-    vim.notify("No file name for current buffer", vim.log.levels.WARN)
-    return
-  end
+	local file = vim.fn.expand("%")
+	if file == "" then
+		vim.notify("No file name for current buffer", vim.log.levels.WARN)
+		return
+	end
 
-  local buf = vim.api.nvim_create_buf(false, true) 
-  vim.cmd("vsplit")                               
-  vim.api.nvim_win_set_buf(0, buf)
+	local buf = vim.api.nvim_create_buf(false, true)
+	vim.cmd("vsplit")
+	vim.api.nvim_win_set_buf(0, buf)
 
-  local diff = vim.fn.systemlist("git diff " .. file)
-  if vim.v.shell_error ~= 0 then
-    vim.notify("git diff failed or repo not found", vim.log.levels.WARN)
-    return
-  end
-  vim.api.nvim_buf_set_lines(buf, 0, -1, false, diff)
+	local diff = vim.fn.systemlist("git diff " .. file)
+	if vim.v.shell_error ~= 0 then
+		vim.notify("git diff failed or repo not found", vim.log.levels.WARN)
+		return
+	end
+	vim.api.nvim_buf_set_lines(buf, 0, -1, false, diff)
 
-  vim.bo[buf].filetype = "diff"
-  vim.bo[buf].buflisted = false
-  vim.bo[buf].modifiable = false
-  vim.bo[buf].bufhidden = "wipe"
+	vim.bo[buf].filetype = "diff"
+	vim.bo[buf].buflisted = false
+	vim.bo[buf].modifiable = false
+	vim.bo[buf].bufhidden = "wipe"
 end, { desc = "Git diff current file in disposable buffer" })
 
 map("n", "<leader>gD", function()
-  local buf = vim.api.nvim_create_buf(false, true)
-  vim.cmd("vsplit")
-  vim.api.nvim_win_set_buf(0, buf)
+	local buf = vim.api.nvim_create_buf(false, true)
+	vim.cmd("vsplit")
+	vim.api.nvim_win_set_buf(0, buf)
 
-  local diff = vim.fn.systemlist("git diff")
-  if vim.v.shell_error ~= 0 then
-    vim.notify("git diff failed or repo not found", vim.log.levels.WARN)
-    return
-  end
-  vim.api.nvim_buf_set_lines(buf, 0, -1, false, diff)
+	local diff = vim.fn.systemlist("git diff")
+	if vim.v.shell_error ~= 0 then
+		vim.notify("git diff failed or repo not found", vim.log.levels.WARN)
+		return
+	end
+	vim.api.nvim_buf_set_lines(buf, 0, -1, false, diff)
 
-  vim.bo[buf].filetype = "diff"
-  vim.bo[buf].buflisted = false
-  vim.bo[buf].modifiable = false
-  vim.bo[buf].bufhidden = "wipe"
+	vim.bo[buf].filetype = "diff"
+	vim.bo[buf].buflisted = false
+	vim.bo[buf].modifiable = false
+	vim.bo[buf].bufhidden = "wipe"
 end, { desc = "Git diff entire repo in disposable buffer" })
 
 map("n", "<leader>ga", function()
-  local file = vim.fn.expand("%")
-  if file == "" then
-    vim.notify("No file name for current buffer", vim.log.levels.WARN)
-    return
-  end
+	local file = vim.fn.expand("%")
+	if file == "" then
+		vim.notify("No file name for current buffer", vim.log.levels.WARN)
+		return
+	end
 
-  local buf = vim.api.nvim_create_buf(false, true)
+	local buf = vim.api.nvim_create_buf(false, true)
 
-  local annotate = vim.fn.systemlist("git annotate " .. file)
-  if vim.v.shell_error ~= 0 then
-    vim.notify("git annotate failed or repo not found", vim.log.levels.WARN)
-    return
-  end
+	local annotate = vim.fn.systemlist("git annotate " .. file)
+	if vim.v.shell_error ~= 0 then
+		vim.notify("git annotate failed or repo not found", vim.log.levels.WARN)
+		return
+	end
 
-  vim.api.nvim_buf_set_lines(buf, 0, -1, false, annotate)
-  vim.bo[buf].filetype = "git" 
-  vim.bo[buf].modifiable = true
-  vim.bo[buf].buflisted = false
+	vim.api.nvim_buf_set_lines(buf, 0, -1, false, annotate)
+	vim.bo[buf].filetype = "git"
+	vim.bo[buf].modifiable = true
+	vim.bo[buf].buflisted = false
 
-  vim.api.nvim_command("topleft vsplit")
-  vim.api.nvim_win_set_buf(0, buf)
+	vim.api.nvim_command("topleft vsplit")
+	vim.api.nvim_win_set_buf(0, buf)
 end, { desc = "Git annotate current file in new left buffer" })
 
 -- Search (find and grep)
-map("n", "<leader>ff", ":find ")
+map("n", "<leader>ff", ":PureFzfProject<CR>")
+map("n", "<leader>fi", ":find ")
 map("n", "<leader>vv", ":vert sf ")
 map("n", "<leader>b", ":b ")
 map("n", "<leader>fq", ":Findqf ")
-map("n", "<leader>fg", ":silent! grep ''<Left>", { desc = "Grep manually" })
-map("n", "<leader>fG", ":silent! grep <C-R><C-W><CR>", { desc = "Grep word under cursor" })
+-- map("n", "<leader>fg", ":silent! grep ''<Left>", { desc = "Grep manually" })
+-- map("n", "<leader>fG", ":silent! grep <C-R><C-W><CR>", { desc = "Grep word under cursor" })
+map("n", "<leader>fg", ":PureRgProject<CR>", { desc = "Grep manually" })
+map("n", "<leader>fG", ":PureRgProject <C-R><C-W><CR>", { desc = "Grep word under cursor" })
 map("n", "<leader>z", ":Zgrep ")
 map("n", "<leader>Z", ":Fzfgrep ")
 map("n", "<leader>cf", ":Cfilter ")
@@ -186,6 +189,9 @@ map("n", "<leader>rn", vim.lsp.buf.rename, bufopts)
 map("n", "<leader>ca", vim.lsp.buf.code_action, bufopts)
 map("n", "<leader>mp", vim.lsp.buf.format, bufopts)
 map("n", "<leader>d", vim.diagnostic.open_float, bufopts)
+map("n", "<leader>co", function()
+	vim.lsp.buf.code_action({ context = { only = { "source.organizeImports" } }, apply = true })
+end, bufopts)
 
 -- map <c-space> to activate completion
 map("i", "<c-space>", function()
