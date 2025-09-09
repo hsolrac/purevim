@@ -1,19 +1,19 @@
 -- Folding setup
-vim.o.foldmethod = 'expr'
-vim.o.foldexpr = 'nvim_treesitter#foldexpr()'
+vim.o.foldmethod = "expr"
+vim.o.foldexpr = "nvim_treesitter#foldexpr()"
 vim.o.foldlevelstart = 99
 
 -- Start Tree-sitter parsing for every file type
 vim.api.nvim_create_autocmd("FileType", {
-  callback = function()
-    pcall(vim.treesitter.start)
-  end
+	callback = function()
+		pcall(vim.treesitter.start)
+	end,
 })
 
 -- Highlight Tree-sitter captures using standard Vim groups
 vim.api.nvim_create_autocmd("FileType", {
-  callback = function()
-    vim.cmd [[
+	callback = function()
+		vim.cmd([[
       highlight link @function Function
       highlight link @method Function
       highlight link @variable Variable
@@ -29,22 +29,17 @@ vim.api.nvim_create_autocmd("FileType", {
       highlight link @property Identifier
       highlight link @field Identifier
       highlight link @punctuation Delimiter
-    ]]
-  end
+    ]])
+	end,
 })
 
 function PureCheckTreesitter()
-  local parser = vim.treesitter.get_parser(0) -- current buffer
-  if parser then
-    print("Tree-sitter is running on parser: " .. parser:lang())
-  else
-    print("No Tree-sitter parser attached to this buffer")
-  end
+	local parser = vim.treesitter.get_parser(0) -- current buffer
+	if parser then
+		print("Tree-sitter is running on parser: " .. parser:lang())
+	else
+		print("No Tree-sitter parser attached to this buffer")
+	end
 end
 
-vim.api.nvim_create_user_command(
-  "PureCheckTreesitter",
-  PureCheckTreesitter,
-  {}                 
-)
-
+vim.api.nvim_create_user_command("PureCheckTreesitter", PureCheckTreesitter, {})
