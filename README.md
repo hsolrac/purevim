@@ -22,6 +22,15 @@ A clean, efficient Neovim configuration that leverages built-in features and pow
 > • Pending LSP adjustments  
 > • Runtime path errors detected
 
+## Performance
+
+This configuration is designed to be lightweight and fast:
+
+- No external plugins
+- Lazy redraw enabled
+- Optimized updatetime
+- Efficient autocommands
+
 ## Features
 
 - [x] Intuitive keymaps
@@ -33,9 +42,11 @@ A clean, efficient Neovim configuration that leverages built-in features and pow
   - [x] Autocomplete
 - [x] Useful autocommands
   - [x] Diagnostics float mouse hover
-  - [x] autoformat
+  - [ ] autoformat
 - [x] File finder
 - [x] Text search
+- [x] Fuzzy Finding Files with preview on Project
+- [x] Greeping with preview on Project
 
 ## TODOs
 
@@ -45,6 +56,8 @@ A clean, efficient Neovim configuration that leverages built-in features and pow
 - [ ] Document how to add new LSP servers
 - [ ] Document how to "auto complete"
 - [ ] Document default bindings
+- [ ] Customize auto-format functions
+- [ ] Generalize symbols for errors, warnings, info to be global
 
 ## Requirements
 
@@ -52,6 +65,8 @@ A clean, efficient Neovim configuration that leverages built-in features and pow
 - A terminal with true color support
 - LSP servers for your languages
 - [Lazygit (Install)](https://github.com/jesseduffield/lazygit)
+- ripgrep
+- fzf
 
 ## Installation
 
@@ -67,14 +82,75 @@ mv ~/.config/nvim ~/.config/nvim.backup
 git clone https://github.com/yourusername/purevim.git ~/.config/nvim
 ```
 
-## Performance
+## Configuration - Optional User Files
 
-This configuration is designed to be lightweight and fast:
+This Neovim configuration supports **user-specific optional files** to
+customize behavior without modifying the main config. All these files are
+**git-ignored** by default.
 
-- No external plugins
-- Lazy redraw enabled
-- Optimized updatetime
-- Efficient autocommands
+If you'd like to customize **PureVim**, simply create these files in the same
+folder as this config `init.lua`.
+
+1. **`early_init.lua`** → runs first, can set globals or feature toggles.
+
+2. **Core config + optional `private.lua`** → loads modules conditionally based
+   on feature toggles.
+
+3. **`post_init.lua`** → runs last, for final tweaks and personal customization.
+
+> ⚡ If a file does not exist, it is simply skipped, and the config runs
+> normally.
+
+### 1. `early_init.lua`
+
+- **Purpose:** Runs **before the main config**.
+
+- **Use it for:** Setting global options, overriding defaults, changing leader
+  keys, or defining feature toggles.
+
+- **Example:**
+
+```lua
+-- ~/.config/nvim/early_init.lua
+
+-- Set your own colorscheme option
+vim.g.colorscheme = "retrobox"
+
+```
+
+### 2. `private.lua`
+
+- **Purpose:** Optional feature toggle file, loaded by the main config.
+- **Use it for:** Turning specific features ON or OFF.
+- **Default behavior:** All features run if this file does not exist.
+- **Example:**
+
+```lua
+-- ~/.config/nvim/private.lua
+
+return {
+  lsp = false,         -- disable LSP
+  treesitter = true,   -- enable treesitter
+  colorscheme = false, -- disable custom pure vim colorscheme
+}
+```
+
+### 3. `post_init.lua`
+
+- **Purpose:** Runs **after all core modules** have loaded.
+- **Use it for:** Adding personal keymaps, tweaks, custom autocommands, or modifying highlights after the colorscheme.
+- **Example:**
+
+```lua
+-- ~/.config/nvim/post_init.lua
+
+-- Custom keymap
+vim.keymap.set("n", "<leader>tt", ":split | terminal<CR>", { desc = "Open terminal" })
+
+-- Tweak statusline colors after colorscheme
+vim.api.nvim_set_hl(0, "StatusLine", { fg = "#cdd6f4", bg = "#11111b" })
+vim.api.nvim_set_hl(0, "StatusLineNC", { fg = "#a6adc8", bg = "#292c3c" })
+```
 
 ## Contributing
 
