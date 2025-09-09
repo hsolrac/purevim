@@ -38,6 +38,7 @@ A clean, efficient Neovim configuration that leverages built-in features and pow
 - [x] Text search
 
 ## TODOs
+
 - [ ] Look for TODOs in the code
 - [ ] Document how to install tree-sitter libraries
 - [ ] Document how to install supported LSP servers
@@ -50,6 +51,7 @@ A clean, efficient Neovim configuration that leverages built-in features and pow
 - Neovim >= 0.10.0
 - A terminal with true color support
 - LSP servers for your languages
+- [Lazygit (Install)](https://github.com/jesseduffield/lazygit)
 
 ## Installation
 
@@ -81,9 +83,11 @@ Feel free to fork this repository and customize it to your needs. Pull requests 
 ## FAQ
 
 ### Do folds work with tree-sitter?
+
 Yes!
 
 Here are some folding key hints:
+
 - zc (fold)
 - zo (unfold)
 - zM (fold all)
@@ -97,7 +101,6 @@ Focus the buffer you'd like more info to and run the command:
 ```
 :PureCheckTreesitter
 ```
-
 
 ## License
 
