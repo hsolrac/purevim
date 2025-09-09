@@ -2,7 +2,7 @@ local M = { path = {} }
 
 function M.search_ancestors(startpath, func)
 	if nvim_eleven then
-		validate('func', func, 'function')
+		validate("func", func, "function")
 	end
 	if func(startpath) then
 		return startpath
@@ -28,18 +28,18 @@ end
 
 function M.strip_archive_subpath(path)
 	-- Matches regex from zip.vim / tar.vim
-	path = vim.fn.substitute(path, 'zipfile://\\(.\\{-}\\)::[^\\\\].*$', '\\1', '')
-	path = vim.fn.substitute(path, 'tarfile:\\(.\\{-}\\)::.*$', '\\1', '')
+	path = vim.fn.substitute(path, "zipfile://\\(.\\{-}\\)::[^\\\\].*$", "\\1", "")
+	path = vim.fn.substitute(path, "tarfile:\\(.\\{-}\\)::.*$", "\\1", "")
 	return path
 end
 
 function M.root_pattern(...)
-	local patterns = M.tbl_flatten { ... }
+	local patterns = M.tbl_flatten({ ... })
 	return function(startpath)
 		startpath = M.strip_archive_subpath(startpath)
 		for _, pattern in ipairs(patterns) do
 			local match = M.search_ancestors(startpath, function(path)
-				for _, p in ipairs(vim.fn.glob(table.concat({ escape_wildcards(path), pattern }, '/'), true, true)) do
+				for _, p in ipairs(vim.fn.glob(table.concat({ escape_wildcards(path), pattern }, "/"), true, true)) do
 					if vim.loop.fs_stat(p) then
 						return path
 					end
