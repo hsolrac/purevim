@@ -48,3 +48,11 @@ vim.cmd([[
   hi LineNr guibg=NONE ctermbg=NONE
   hi EndOfBuffer guibg=NONE ctermbg=NONE
 ]])
+
+
+local ok, extui = pcall(require, "vim._extui")
+if ok then
+  extui.enable({
+    enable = true,
+  })
+end
