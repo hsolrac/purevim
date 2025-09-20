@@ -15,6 +15,7 @@ opt.signcolumn = "yes"
 opt.termguicolors = true
 opt.showcmd = true
 opt.conceallevel = 0
+opt.wrap = false
 
 opt.shiftwidth = 2
 opt.tabstop = 2

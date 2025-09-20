@@ -83,9 +83,8 @@ map("n", "<leader>tr", ":set relativenumber!<CR>", { desc = "Toggle [r]elative l
 
 -- Git related
 -- TODO: make all these git functions into its own git.lua
---       then come back and set only the bindings, like to :PureGitStatus
 map("n", "<leader>gL", ":PureLazyGit<CR>")
-map("n", "<leader>gs", ":horizontal new | :terminal git status --short<CR>")
+map("n", "<leader>gs", ":PureGitStatus<CR>")
 
 map("n", "<leader>gd", function()
 	local file = vim.fn.expand("%")
