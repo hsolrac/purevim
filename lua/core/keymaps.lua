@@ -7,9 +7,6 @@ local bufopts = { noremap = true, silent = true }
 map("n", "<C-s>", ":w<CR>")
 map("n", "<Esc>", ":noh<CR>", { silent = true })
 
-map("v", "J", ":m '>+1<CR>gv=gv")
-map("v", "K", ":m '<-2<CR>gv=gv")
-
 map("n", "<leader>ee", ":Explore <CR>")
 
 map("n", "<leader>ev", function()

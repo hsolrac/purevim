@@ -70,17 +70,45 @@ This configuration is designed to be lightweight and fast:
 
 ## Installation
 
-1. Backup your existing Neovim configuration:
+This configuration uses [Nix](https://nixos.org/) with [Flakes](https://nixos.wiki/wiki/Flakes) to provide a reproducible environment with all necessary dependencies.
+
+### 1. Install Nix
+
+First, [install Nix](https://nixos.org/download.html) on your system and [enable Flakes](https://nixos.wiki/wiki/Flakes#Enable_flakes).
+
+### 2. Clone the Repository
+
+Clone this repository to your Neovim configuration directory:
 
 ```bash
-mv ~/.config/nvim ~/.config/nvim.backup
-```
+# Backup your existing config first if you have one
+# mv ~/.config/nvim ~/.config/nvim.backup
 
-3. Clone this repository:
-
-```bash
 git clone https://github.com/yourusername/purevim.git ~/.config/nvim
 ```
+
+### 3. Launch the Environment
+
+Navigate to the configuration directory and run `nix develop`. This will launch a shell with Neovim and all the pre-configured language servers (`rust-analyzer`, `lua-language-server`, `typescript-language-server`) available in your `PATH`.
+
+```bash
+cd ~/.config/nvim
+nix develop
+```
+
+Now, you can run `nvim` from within this shell, and everything will work out of the box.
+
+### Manual Installation (Without Nix)
+
+If you prefer not to use Nix, you must install the following dependencies manually and ensure they are in your `PATH`:
+
+- Neovim >= 0.10.0
+- [Lazygit](https://github.com/jesseduffield/lazygit)
+- `ripgrep`
+- `fzf`
+- `lua-language-server`
+- `rust-analyzer`
+- `typescript-language-server`
 
 ## Configuration - Optional User Files
 
