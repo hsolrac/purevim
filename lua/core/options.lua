@@ -15,6 +15,7 @@ opt.signcolumn = "yes"
 opt.termguicolors = true
 opt.showcmd = true
 opt.conceallevel = 0
+opt.wrap = false
 
 opt.shiftwidth = 2
 opt.tabstop = 2
@@ -48,3 +49,11 @@ vim.cmd([[
   hi LineNr guibg=NONE ctermbg=NONE
   hi EndOfBuffer guibg=NONE ctermbg=NONE
 ]])
+
+
+local ok, extui = pcall(require, "vim._extui")
+if ok then
+  extui.enable({
+    enable = true,
+  })
+end

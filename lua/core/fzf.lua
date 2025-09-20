@@ -29,9 +29,10 @@ M.fzf_open = function()
 	local root = project_root()
 
 	local cmd = [[
-    bash -c 'fzf --reverse --preview "bat --style=numbers --color=always --line-range=:50 {}" \
-    --preview-window=right:60%:wrap --expect=enter'
-  ]]
+		bash -c 'fzf --reverse --border=none --prompt="File: " --pointer=">"\
+		--preview "bat --style=numbers --color=always --line-range=:50 {}" \
+		--preview-window=right:60%:wrap --expect=enter'
+		]]
 
 	-- remember previous window
 	local prev_win = vim.api.nvim_get_current_win()
@@ -90,7 +91,7 @@ M.rg_search = function(default_query)
 	local cmd = string.format(
 		[[
     bash -c 'rg --column --line-number --no-heading --color=always "%s" | \
-    fzf --ansi --reverse --preview "bat --style=numbers --color=always --highlight-line {2} {1}" \
+    fzf --prompt="Grep: " --pointer=">" --ansi --reverse --preview "bat --style=numbers --color=always --highlight-line {2} {1}" \
     --delimiter : --preview-window=right:60%%:wrap --expect=enter'
   ]],
 		query
@@ -123,9 +124,70 @@ M.rg_search = function(default_query)
 	vim.cmd("startinsert")
 end
 
+
+-- Git status + FZF floating picker
+M.git_status = function()
+	local width = math.floor(vim.o.columns * 0.8)
+	local height = math.floor(vim.o.lines * 0.8)
+	local row = math.floor((vim.o.lines - height) / 2)
+	local col = math.floor((vim.o.columns - width) / 2)
+
+	local buf = vim.api.nvim_create_buf(false, true)
+
+	local win = vim.api.nvim_open_win(buf, true, {
+		relative = "editor",
+		width = width,
+		height = height,
+		row = row,
+		col = col,
+		style = "minimal",
+	})
+
+	local root = project_root()
+	local prev_win = vim.api.nvim_get_current_win()
+
+	local cmd = [[
+		bash -c 'git status --short | grep -v "^##" | \
+		fzf --reverse --border=none --prompt="Git: " --pointer=">" \
+		--preview "git diff --color {2}" \
+		--preview-window=right:60%:wrap --expect=enter'
+	]]
+
+	vim.fn.termopen(cmd, {
+		cwd = root,
+		on_exit = function(_, exit_code, _)
+			local lines = vim.api.nvim_buf_get_lines(buf, 0, -1, false)
+			-- lines[1] = key ("enter"), lines[2] = selection (" M path/to/file")
+			local selection = lines[2]
+
+			-- close floating terminal
+			if vim.api.nvim_win_is_valid(win) then
+				vim.api.nvim_win_close(win, true)
+			end
+
+			if selection and selection ~= "" then
+				-- strip the git status flags (e.g. " M ", "A ", "?? ") → keep just the path
+				local file = selection:match("^%s*%S+%s+(.+)$")
+				if file and file ~= "" then
+					if vim.api.nvim_win_is_valid(prev_win) then
+						vim.api.nvim_set_current_win(prev_win)
+					end
+					vim.cmd("edit " .. vim.fn.fnameescape(root .. "/" .. file))
+				end
+			end
+		end,
+	})
+
+	vim.cmd("startinsert")
+end
+
+
 vim.api.nvim_create_user_command("PureRgProject", function(opts)
 	require("core.fzf").rg_search(opts.args)
 end, { nargs = "?" })
+
 vim.api.nvim_create_user_command("PureFzfProject", M.fzf_open, {})
+
+vim.api.nvim_create_user_command("PureGitStatus", M.git_status, {})
 
 return M
