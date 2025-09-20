@@ -3,3 +3,4 @@ private.lua
 post_init.lua
 
 .DS_Store
+.direnv/
