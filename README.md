@@ -114,8 +114,7 @@ folder as this config `init.lua`.
 -- ~/.config/nvim/early_init.lua
 
 -- Set your own colorscheme option
-vim.g.colorscheme = "retrobox"
-
+vim.cmd.colorscheme("retrobox")
 ```
 
 ### 2. `private.lua`
