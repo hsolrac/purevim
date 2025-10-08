@@ -32,7 +32,11 @@ return {
 				return nil
 			end
 
-			if util.path.extname(fname) == ".ts" or util.path.extname(fname) == ".js" then
+			if util.path.extname(fname) == ".ts" 
+				or util.path.extname(fname) == ".js"
+				or util.path.extname(fname) == ".tsx"
+				or util.path.extname(fname) == ".jsx"
+				then
 				return util.path.dirname(fname)
 			end
 
@@ -58,7 +62,15 @@ return {
 				parameterTypes = { enabled = true },
 				variableTypes = { enabled = true },
 			}
+		},
+		diagostics = {
+			enable = true,
+			disable = { "undefined-field" },
+			globals = { "vim" }
 		}
 	},
-	single_file_support = true
+	single_file_support = true,
+	telemetry = {
+		enable = false
+	}
 }

@@ -51,6 +51,9 @@ end)
 run_if("colorscheme", function()
 	require("core.colorscheme").setup()
 end)
+run_if("usql", function()
+	require("core.usql")
+end)
 
 -- Load optional post_init.lua file
 pcall(require, "post_init")
