@@ -70,13 +70,17 @@ This configuration is designed to be lightweight and fast:
 
 ## Installation
 
+You can install PureVim in two ways: using Nix for a reproducible environment, or manually with a helper script.
+
+### Installation with Nix
+
 This configuration uses [Nix](https://nixos.org/) with [Flakes](https://nixos.wiki/wiki/Flakes) to provide a reproducible environment with all necessary dependencies.
 
-### 1. Install Nix
+**1. Install Nix**
 
 First, [install Nix](https://nixos.org/download.html) on your system and [enable Flakes](https://nixos.wiki/wiki/Flakes#Enable_flakes).
 
-### 2. Clone the Repository
+**2. Clone the Repository**
 
 Clone this repository to your Neovim configuration directory:
 
@@ -87,7 +91,7 @@ Clone this repository to your Neovim configuration directory:
 git clone https://github.com/yourusername/purevim.git ~/.config/nvim
 ```
 
-### 3. Launch the Environment
+**3. Launch the Environment**
 
 Navigate to the configuration directory and run `nix develop`. This will launch a shell with Neovim and all the pre-configured language servers (`rust-analyzer`, `lua-language-server`, `typescript-language-server`) available in your `PATH`.
 
@@ -98,13 +102,27 @@ nix develop
 
 Now, you can run `nvim` from within this shell, and everything will work out of the box.
 
-### Manual Installation (Without Nix)
+### Manual Installation
 
-If you prefer not to use Nix, you must install the following dependencies manually and ensure they are in your `PATH`:
+If you prefer not to use Nix, you can use the provided installation script. This script will clone the repository and check for dependencies.
 
-- Neovim >= 0.10.0
-- [Lazygit](https://github.com/jesseduffield/lazygit)
-- `ripgrep`
+**Run the installer:**
+
+You can run the installation script directly from the web:
+
+```bash
+bash <(curl -s https://raw.githubusercontent.com/yourusername/purevim/main/bin/purevim)
+```
+
+This will:
+- Back up your existing Neovim configuration (if any) to `~/.config/nvim.backup`.
+- Clone the PureVim repository to `~/.config/nvim`.
+- Check for required dependencies and notify you if any are missing.
+
+The script will check for:
+- `nvim` (Neovim)
+- `lazygit`
+- `rg` (ripgrep)
 - `fzf`
 - `lua-language-server`
 - `rust-analyzer`
