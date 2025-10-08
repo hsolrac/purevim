@@ -15,6 +15,8 @@
     {
       devShells.${system}.default = pkgs.mkShell {
         buildInputs = with pkgs; [
+          usql
+          lazygit
           # Neovim itself
           neovim
 

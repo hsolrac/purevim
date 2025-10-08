@@ -5,7 +5,7 @@ return {
 	root_dir = vim.fs.dirname(vim.fs.find({ "lua_ls.json", ".git" }, { upward = true })[1]),
 	capabilities = vim.lsp.protocol.make_client_capabilities(),
 	settings = {
-		Lua = {
+		Lua= {
 			runtime = {
 				version = "Lua5.4",
 				path = vim.split(package.path, ";"),
