@@ -183,7 +183,7 @@ end
 
 
 vim.api.nvim_create_user_command("PureRgProject", function(opts)
-	require("core.fzf").rg_search(opts.args)
+	require("core.integrations.fzf").rg_search(opts.args)
 end, { nargs = "?" })
 
 vim.api.nvim_create_user_command("PureFzfProject", M.fzf_open, {})

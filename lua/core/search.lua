@@ -35,17 +35,7 @@ function M.fuzzy_filter_grep(query, path)
 	vim.cmd("copen")
 end
 
-function M.fzf_grep(query, path)
-	path = path or "."
-	local oldgrepprg = vim.o.grepprg
-	vim.o.grepprg = "rg --column --hidden -g '!.git/*' . " .. path .. " | fzf --filter='$*' --delimiter : --nth 4.."
-	vim.cmd("grep " .. query)
-	vim.o.grepprg = oldgrepprg
-end
 
-function M.fuzzy_find_func(cmdarg, _)
-	return vim.fn.systemlist("fd --hidden . | fzf --filter='" .. cmdarg .. "'")
-end
 
 function M.fd_set_quickfix(...)
 	local args = { ... }
@@ -75,16 +65,8 @@ vim.api.nvim_create_user_command("Zgrep", function(opts)
 	M.fuzzy_filter_grep(unpack(opts.fargs))
 end, { nargs = "+", complete = "file_in_path" })
 
-vim.api.nvim_create_user_command("Fzfgrep", function(opts)
-	M.fzf_grep(unpack(opts.fargs))
-end, { nargs = "+", complete = "file_in_path" })
 
-vim.cmd([[
-function! FuzzyFindFunc(cmdarg, cmdline, cursorpos)
-  " Use echom to log in :messages
-  echom "FuzzyFindFunc called with: " . a:cmdarg
-  return luaeval("require'core.search'.fuzzy_find_func(_A[1])", [a:cmdarg])
-endfunction
-]])
+
+
 
 return M
