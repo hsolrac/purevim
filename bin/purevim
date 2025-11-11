@@ -1,0 +1,51 @@
+#!/usr/bin/env bash
+
+set -o errexit -o pipefail -o nounset
+# A script to install PureVim, a plugin-free Neovim configuration.
+
+REPO_URL="git@github.com:hsolrac/purevim.git"
+INSTALL_DIR="${HOME}/.config/nvim"
+
+msg() {
+  echo -e "[PureVim] ${1}"
+}
+
+command_exists() {
+  command -v "$1" >/dev/null 2>&1
+}
+
+main() {
+  msg "Starting PureVim installation..."
+
+  msg "Checking for dependencies..."
+  dependencies=("git" "nvim" "lazygit" "rg" "fzf" "lua-language-server" "rust-analyzer" "typescript-language-server")
+  missing_deps=()
+
+  for dep in "${dependencies[@]}"; do
+    if ! command_exists "${dep}"; then
+      missing_deps+=("${dep}")
+    fi
+  done
+
+  if [[ ${#missing_deps[@]} -ne 0 ]]; then
+    msg "\nERROR: The following dependencies are missing:"
+    for dep in "${missing_deps[@]}"; do
+      echo "  - ${dep}"
+    done
+    msg "\nPlease install them manually before continuing.\n"
+    exit 1
+  fi
+
+  if [[ -d "${INSTALL_DIR}" ]]; then
+    msg "Backing up existing Neovim configuration to ${INSTALL_DIR}.backup..."
+    mv "${INSTALL_DIR}" "${INSTALL_DIR}.backup"
+  fi
+
+  msg "Cloning PureVim into ${INSTALL_DIR}..."
+  git clone "${REPO_URL}" "${INSTALL_DIR}"
+
+  msg "\nInstallation complete! Enjoy PureVim."
+  msg "You can now launch Neovim with 'nvim'.\n"
+}
+
+main "$@"
