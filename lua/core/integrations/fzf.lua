@@ -9,11 +9,31 @@ local function project_root()
 	end
 end
 
+M.config = {
+  position = "bottom", -- "center" | "bottom" | "top"
+  width_ratio = 0.8,
+  height_ratio = 0.8,
+  border = "rounded" -- "none" | "rounded" | "single" etc.
+}
+
+M.setup = function(opts)
+  M.config = vim.tbl_deep_extend("force", M.config, opts or {})
+end
+
 M.fzf_open = function()
-	local width = math.floor(vim.o.columns * 0.8)
-	local height = math.floor(vim.o.lines * 0.8)
-	local row = math.floor((vim.o.lines - height) / 2)
-	local col = math.floor((vim.o.columns - width) / 2)
+  local cfg = M.config
+  local width =  math.floor(vim.o.columns * cfg.width_ratio)
+  local height = math.floor(vim.o.lines * cfg.height_ratio)
+  local col = math.floor((vim.o.columns - width) / 2)
+
+  local row
+  if cfg.position == "center" then
+    row = math.floor((vim.o.lines - height) / 2)
+  elseif cfg.position == "top" then
+    row = 1
+  else
+    row = vim.o.lines - height - 2
+  end
 
 	local buf = vim.api.nvim_create_buf(false, true)
 
@@ -24,6 +44,7 @@ M.fzf_open = function()
 		row = row,
 		col = col,
 		style = "minimal",
+		border = cfg.border,
 	})
 
 	local root = project_root()
