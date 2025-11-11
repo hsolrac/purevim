@@ -91,10 +91,12 @@ First, [install Nix](https://nixos.org/download.html) on your system and
 
 Clone this repository to your Neovim configuration directory:
 
-```bash # Backup your existing config first if you have one # mv ~/.config/nvim
-~/.config/nvim.backup
+```bash
+# Backup your existing config first if you have one
+# mv ~/.config/nvim ~/.config/nvim.backup
 
-git clone https://github.com/yourusername/purevim.git ~/.config/nvim ```
+git clone https://github.com/yourusername/purevim.git ~/.config/nvim
+```
 
 **Step 3. Launch the Environment**
 
@@ -116,7 +118,8 @@ setup and dependency checks for you.
 Run the installer:
 
 ```bash bash <(curl -s
-https://raw.githubusercontent.com/yourusername/purevim/main/bin/purevim) ```
+https://raw.githubusercontent.com/yourusername/purevim/main/bin/purevim)
+```
 The script will:
 
 - Back up your existing Neovim configuration (if any) to ~/.config/nvim.backup
@@ -137,7 +140,8 @@ The script will:
 If you prefer a completely transparent setup — no scripts, no abstractions —
 install manually:
 
-```bash git clone https://github.com/yourusername/purevim.git ~/.config/nvim
+```bash
+git clone https://github.com/yourusername/purevim.git ~/.config/nvim
 ```
 
 Then manually ensure all dependencies are installed on your system:
@@ -153,7 +157,9 @@ Then manually ensure all dependencies are installed on your system:
 
 Once everything is ready, just launch Neovim:
 
-```bash nvim ```
+```bash 
+nvim
+```
 
 And you’re good to go.
 
@@ -188,7 +194,8 @@ keys, or defining feature toggles.
 
 ```lua -- ~/.config/nvim/early_init.lua
 
--- Set your own colorscheme option vim.cmd.colorscheme("retrobox") ```
+-- Set your own colorscheme option vim.cmd.colorscheme("retrobox")
+```
 
 ### 2. `private.lua`
 
@@ -217,7 +224,8 @@ desc = "Open terminal" })
 
 -- Tweak statusline colors after colorscheme vim.api.nvim_set_hl(0,
 "StatusLine", { fg = "#cdd6f4", bg = "#11111b" }) vim.api.nvim_set_hl(0,
-    "StatusLineNC", { fg = "#a6adc8", bg = "#292c3c" }) ```
+    "StatusLineNC", { fg = "#a6adc8", bg = "#292c3c" })
+```
 
 ## Contributing
 
@@ -242,7 +250,9 @@ Here are some folding key hints:
 
 Focus the buffer you'd like more info to and run the command:
 
-``` :PureCheckTreesitter ```
+``` 
+:PureCheckTreesitter
+ ```
 
 ## License
 
