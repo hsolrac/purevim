@@ -43,7 +43,12 @@ run_if("lazygit", function()
 	require("core.integrations.lazygit")
 end)
 run_if("fzf", function()
-	require("core.integrations.fzf")
+	require("core.integrations.fzf").setup({
+		position = "bottom",
+		width_ratio = 1,
+		height_ratio = 0.3,
+		border = "none"
+	})
 end)
 run_if("statusline", function()
 	require("core.statusline")

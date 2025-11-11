@@ -17,6 +17,7 @@
         buildInputs = with pkgs; [
           usql
           lazygit
+					bat
           # Neovim itself
           neovim
 
