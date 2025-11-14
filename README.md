@@ -103,7 +103,7 @@ setup and dependency checks for you.
 Run the installer:
 
 ```bash bash <(curl -s
-https://raw.githubusercontent.com/yourusername/purevim/main/bin/purevim)
+https://raw.githubusercontent.com/hsolrac/purevim/main/bin/purevim)
 ```
 The script will:
 
@@ -126,7 +126,7 @@ If you prefer a completely transparent setup — no scripts, no abstractions —
 install manually:
 
 ```bash
-git clone https://github.com/yourusername/purevim.git ~/.config/nvim
+git clone https://github.com/hsolrac/purevim.git ~/.config/nvim
 ```
 
 Then manually ensure all dependencies are installed on your system:
