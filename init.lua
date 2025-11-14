@@ -1,12 +1,13 @@
 -- Main configuration Neovim
 -- Author: Carlos
 
-local start_time = vim.loop.hrtime()
+_G.start_time = vim.loop.hrtime()
 
 package.path = package.path .. ";" .. vim.fn.stdpath("config") .. "/?.lua"
 
 -- Load optional early_init.lua file
 pcall(require, "early_init")
+
 
 -- Try to load private feature toggles
 local ok, private = pcall(require, "private")
@@ -59,12 +60,7 @@ end)
 run_if("usql", function()
 	require("core.integrations.usql")
 end)
+require('core.dashboard').setup()
 
 -- Load optional post_init.lua file
 pcall(require, "post_init")
-
--- Neovim is booted! How long did it take?
-vim.schedule(function()
-	local elapsed = (vim.loop.hrtime() - start_time) / 1e6 -- convert nanoseconds to milliseconds
-	print(string.format(">>> [PureVim] loaded in %.2f ms", elapsed))
-end)

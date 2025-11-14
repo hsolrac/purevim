@@ -28,6 +28,7 @@
 
           # Formatters
           stylua
+          figlet
         ];
       };
     };
