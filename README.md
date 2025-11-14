@@ -1,25 +1,10 @@
-```ascii
-██████╗ ██╗   ██╗██████╗ ███████╗██╗   ██╗██╗███╗   ███╗
-██╔══██╗██║   ██║██╔══██╗██╔════╝██║   ██║██║████╗ ████║
-██████╔╝██║   ██║██████╔╝█████╗  ██║   ██║██║██╔████╔██║
-██╔═══╝ ██║   ██║██╔══██╗██╔══╝  ╚██╗ ██╔╝██║██║╚██╔╝██║
-██║     ╚██████╔╝██║  ██║███████╗ ╚████╔╝ ██║██║ ╚═╝ ██║
-╚═╝      ╚═════╝ ╚═╝  ╚═╝╚══════╝  ╚═══╝  ╚═╝╚═╝     ╚═╝
-```
-
 # PureVim - A Plugin-free Neovim Configuration
 
 A clean, efficient Neovim configuration that leverages built-in features and
 powerful external tools for a great editing experience.
 
-<div style="display: flex; justify-content: space-between;"> <img
-    src="https://github.com/user-attachments/assets/754119f0-42fa-4dcc-ade0-45e5eb4ac7ca"
-    style="width: 48%;"/> <img
-        src="https://github.com/user-attachments/assets/838a282a-6df9-4f10-b998-58c80ab433b3"
-        style="width: 48%;"/> </div>
+<img width="1912" height="1017" alt="image" src="https://github.com/user-attachments/assets/dc70f57b-cd79-42ae-87ef-21a07ca8c118" />
 
-> [!WARNING]  **Incomplete Setup**  This configuration is not yet
-> production-ready.  • Pending LSP adjustments  • Runtime path errors detected
 
 ## Performance
 

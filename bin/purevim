@@ -18,7 +18,7 @@ main() {
   msg "Starting PureVim installation..."
 
   msg "Checking for dependencies..."
-  dependencies=("git" "nvim" "lazygit" "rg" "fzf" "lua-language-server" "rust-analyzer" "typescript-language-server")
+  dependencies=("git" "nvim" "lazygit" "rg" "fzf" "lua-language-server" "rust-analyzer" "typescript-language-server" "figlet")
   missing_deps=()
 
   for dep in "${dependencies[@]}"; do
@@ -28,13 +28,19 @@ main() {
   done
 
   if [[ ${#missing_deps[@]} -ne 0 ]]; then
-    msg "\nERROR: The following dependencies are missing:"
+    msg "\nERROR: The following **dependencies** are missing:"
     for dep in "${missing_deps[@]}"; do
       echo "  - ${dep}"
     done
     msg "\nPlease install them manually before continuing.\n"
     exit 1
   fi
+
+  msg "\nDependency check complete."
+  
+  msg "NOTE: PureVim requires the **'dos-rebel'** font for the dashboard title (using figlet)."
+  msg "If the title appears as standard ASCII text, you need to manually install 'dos-rebel.flf' into your figlet fonts directory (e.g., /usr/share/figlet/ or ~/.figletfonts/)."
+  # ----------------------------------------
 
   if [[ -d "${INSTALL_DIR}" ]]; then
     msg "Backing up existing Neovim configuration to ${INSTALL_DIR}.backup..."
