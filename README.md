@@ -80,7 +80,7 @@ Clone this repository to your Neovim configuration directory:
 # Backup your existing config first if you have one
 # mv ~/.config/nvim ~/.config/nvim.backup
 
-git clone https://github.com/yourusername/purevim.git ~/.config/nvim
+git clone https://github.com/hsolrac/purevim.git ~/.config/nvim
 ```
 
 **Step 3. Launch the Environment**
