@@ -1,13 +1,15 @@
 local M = {}
 
 local function project_root()
-	local git_root = vim.fn.systemlist("git rev-parse --show-toplevel")[1]
-	if git_root and git_root ~= "" then
-		return git_root
-	else
-		return vim.fn.getcwd()
-	end
+  local git_root = vim.fn.systemlist("git rev-parse --show-toplevel")[1]
+
+  if git_root and git_root ~= "" and vim.fn.isdirectory(git_root) == 1 then
+    return git_root
+  end
+
+  return vim.fn.getcwd()
 end
+
 
 M.config = {
   position = "bottom", -- "center" | "bottom" | "top"
