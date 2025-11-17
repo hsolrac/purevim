@@ -26,6 +26,7 @@ end
 -- Core modules
 require("core.options")
 require("core.keymaps")
+require("core.git").setup()
 
 -- Optional modules
 run_if("lsp", function()

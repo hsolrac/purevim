@@ -1,6 +1,7 @@
 local map = vim.keymap.set
 local search = require("core.search")
 local bufopts = { noremap = true, silent = true }
+local git = require("core.git")
 
 -- Quality of life maps
 
@@ -78,76 +79,76 @@ end, { desc = "Toggle [d]iagnostics" })
 map("n", "<leader>tl", ":set number! norelativenumber<CR>", { desc = "Toggle [l]ine number" })
 map("n", "<leader>tr", ":set relativenumber!<CR>", { desc = "Toggle [r]elative line number" })
 
--- Git related
--- TODO: make all these git functions into its own git.lua
+-- git 
+map("n", "<leader>gb", git.toggle_blame, { desc = "Toggle inline git blame" })
 map("n", "<leader>gL", ":PureLazyGit<CR>")
 map("n", "<leader>gs", ":PureGitStatus<CR>")
 
 map("n", "<leader>gd", function()
-	local file = vim.fn.expand("%")
-	if file == "" then
-		vim.notify("No file name for current buffer", vim.log.levels.WARN)
-		return
-	end
+  local file = vim.fn.expand("%")
+  if file == "" then
+    vim.notify("No file name for current buffer", vim.log.levels.WARN)
+    return
+  end
 
-	local buf = vim.api.nvim_create_buf(false, true)
-	vim.cmd("vsplit")
-	vim.api.nvim_win_set_buf(0, buf)
+  local buf = vim.api.nvim_create_buf(false, true)
+  vim.cmd("vsplit")
+  vim.api.nvim_win_set_buf(0, buf)
 
-	local diff = vim.fn.systemlist("git diff " .. file)
-	if vim.v.shell_error ~= 0 then
-		vim.notify("git diff failed or repo not found", vim.log.levels.WARN)
-		return
-	end
-	vim.api.nvim_buf_set_lines(buf, 0, -1, false, diff)
+  local diff = vim.fn.systemlist({ "git", "diff", file })
+  if vim.v.shell_error ~= 0 then
+    vim.notify("git diff failed or repo not found", vim.log.levels.WARN)
+    return
+  end
+  vim.api.nvim_buf_set_lines(buf, 0, -1, false, diff)
 
-	vim.bo[buf].filetype = "diff"
-	vim.bo[buf].buflisted = false
-	vim.bo[buf].modifiable = false
-	vim.bo[buf].bufhidden = "wipe"
+  vim.bo[buf].filetype = "diff"
+  vim.bo[buf].buflisted = false
+  vim.bo[buf].modifiable = false
+  vim.bo[buf].bufhidden = "wipe"
 end, { desc = "Git diff current file in disposable buffer" })
 
 map("n", "<leader>gD", function()
-	local buf = vim.api.nvim_create_buf(false, true)
-	vim.cmd("vsplit")
-	vim.api.nvim_win_set_buf(0, buf)
+  local buf = vim.api.nvim_create_buf(false, true)
+  vim.cmd("vsplit")
+  vim.api.nvim_win_set_buf(0, buf)
 
-	local diff = vim.fn.systemlist("git diff")
-	if vim.v.shell_error ~= 0 then
-		vim.notify("git diff failed or repo not found", vim.log.levels.WARN)
-		return
-	end
-	vim.api.nvim_buf_set_lines(buf, 0, -1, false, diff)
+  local diff = vim.fn.systemlist({ "git", "diff" })
+  if vim.v.shell_error ~= 0 then
+    vim.notify("git diff failed or repo not found", vim.log.levels.WARN)
+    return
+  end
+  vim.api.nvim_buf_set_lines(buf, 0, -1, false, diff)
 
-	vim.bo[buf].filetype = "diff"
-	vim.bo[buf].buflisted = false
-	vim.bo[buf].modifiable = false
-	vim.bo[buf].bufhidden = "wipe"
+  vim.bo[buf].filetype = "diff"
+  vim.bo[buf].buflisted = false
+  vim.bo[buf].modifiable = false
+  vim.bo[buf].bufhidden = "wipe"
 end, { desc = "Git diff entire repo in disposable buffer" })
 
 map("n", "<leader>ga", function()
-	local file = vim.fn.expand("%")
-	if file == "" then
-		vim.notify("No file name for current buffer", vim.log.levels.WARN)
-		return
-	end
+  local file = vim.fn.expand("%")
+  if file == "" then
+    vim.notify("No file name for current buffer", vim.log.levels.WARN)
+    return
+  end
 
-	local buf = vim.api.nvim_create_buf(false, true)
+  local buf = vim.api.nvim_create_buf(false, true)
 
-	local annotate = vim.fn.systemlist("git annotate " .. file)
-	if vim.v.shell_error ~= 0 then
-		vim.notify("git annotate failed or repo not found", vim.log.levels.WARN)
-		return
-	end
+  local annotate = vim.fn.systemlist({ "git", "annotate", file })
+  if vim.v.shell_error ~= 0 then
+    vim.notify("git annotate failed or repo not found", vim.log.levels.WARN)
+    return
+  end
 
-	vim.api.nvim_buf_set_lines(buf, 0, -1, false, annotate)
-	vim.bo[buf].filetype = "git"
-	vim.bo[buf].modifiable = true
-	vim.bo[buf].buflisted = false
+  vim.api.nvim_buf_set_lines(buf, 0, -1, false, annotate)
+  vim.bo[buf].filetype = "git"
+  vim.bo[buf].modifiable = true
+  vim.bo[buf].buflisted = false
 
-	vim.api.nvim_command("topleft vsplit")
-	vim.api.nvim_win_set_buf(0, buf)
-end, { desc = "Git annotate current file in new left buffer" })
+  vim.cmd("topleft vsplit")
+  vim.api.nvim_win_set_buf(0, buf)
+end, { desc = "Git annotate current file" })
 
 -- Search (find and grep)
 map("n", "<leader>ff", ":PureFzfProject<CR>")
