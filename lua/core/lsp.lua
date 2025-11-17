@@ -1,23 +1,4 @@
 local M = {}
-
--- TODO: make this generic
---
--- local function setup_diagnostics()
---   vim.diagnostic.config({
---     virtual_text = false,
---     signs = true,
---     underline = true,
---     update_in_insert = false,
---     severity_sort = true,
---     float = {
---       border = "rounded",
---       source = "always",
---       header = "",
---       prefix = "●",
---     },
---   })
--- end
-
 local function file_exists(pattern)
 	return vim.fn.glob(pattern) ~= ""
 end
@@ -83,7 +64,6 @@ local function start_server(name, server)
 end
 
 function M.setup()
-	-- setup_diagnostics()
 	for name, server in pairs(servers) do
 		start_server(name, server)
 	end

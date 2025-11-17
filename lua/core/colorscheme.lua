@@ -58,6 +58,11 @@ function M.setup()
 	-- popup menus (completion, telescope, etc.)
 	vim.api.nvim_set_hl(0, "Pmenu", { fg = colors.text, bg = colors.surface0 })
 	vim.api.nvim_set_hl(0, "PmenuSel", { fg = colors.base, bg = colors.lavender })
+
+	-- git signs
+	vim.api.nvim_set_hl(0, "GitSignsAdd", { fg = colors.green })
+	vim.api.nvim_set_hl(0, "GitSignsChange", { fg = colors.yellow })
+	vim.api.nvim_set_hl(0, "GitSignsDelete", { fg = colors.red })
 end
 
 return M
