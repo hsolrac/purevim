@@ -180,7 +180,8 @@ keys, or defining feature toggles.
 
 ```lua -- ~/.config/nvim/early_init.lua
 
--- Set your own colorscheme option vim.cmd.colorscheme("retrobox")
+-- Set your own colorscheme option
+vim.cmd.colorscheme("retrobox")
 ```
 
 ### 2. `private.lua`
@@ -192,8 +193,11 @@ keys, or defining feature toggles.
 
 ```lua -- ~/.config/nvim/private.lua
 
-return { lsp = false,         -- disable LSP treesitter = true,   -- enable
-    treesitter colorscheme = false, -- disable custom pure vim colorscheme }
+return {
+  lsp = false, -- disable LSP
+  treesitter = true, -- enable treesitter
+  colorscheme = false, -- disable custom pure vim colorscheme
+}
 ```
 
 ### 3. `post_init.lua`
@@ -205,11 +209,11 @@ modifying highlights after the colorscheme.
 
 ```lua -- ~/.config/nvim/post_init.lua
 
--- Custom keymap vim.keymap.set("n", "<leader>tt", ":split | terminal<CR>", {
-desc = "Open terminal" })
+-- Custom keymap
+vim.keymap.set("n", "<leader>tt", ":split | terminal<CR>", { desc = "Open terminal" })
 
--- Tweak statusline colors after colorscheme vim.api.nvim_set_hl(0,
-"StatusLine", { fg = "#cdd6f4", bg = "#11111b" }) vim.api.nvim_set_hl(0,
+-- Tweak statusline colors after colorscheme
+vim.api.nvim_set_hl(0, "StatusLine", { fg = "#cdd6f4", bg = "#11111b" }) vim.api.nvim_set_hl(0,
     "StatusLineNC", { fg = "#a6adc8", bg = "#292c3c" })
 ```
 
