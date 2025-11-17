@@ -103,7 +103,7 @@ setup and dependency checks for you.
 Run the installer:
 
 ```bash 
-bash <(curl -s https://raw.githubusercontent.com/hsolrac/purevim/master/bin/purevim)
+curl -fsSL https://raw.githubusercontent.com/hsolrac/purevim/master/bin/purevim | bash
 ```
 The script will:
 
