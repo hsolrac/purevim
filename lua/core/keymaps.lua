@@ -1,7 +1,7 @@
 local map = vim.keymap.set
 local search = require("core.search")
 local bufopts = { noremap = true, silent = true }
-local git = require("core.git")
+local git = require("core.integrations.git")
 
 -- Quality of life maps
 

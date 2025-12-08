@@ -39,19 +39,49 @@ local function update_signs()
     return
   end
 
-  local line_nr = 0
-  for _, line in ipairs(diff_output) do
-    if line:match("^@@") then
-      line_nr = tonumber(line:match("%+([0-9]+)")) - 1
-    elseif line:match("^[^-+@]") then
-      line_nr = line_nr + 1
-    elseif line:match("^%+") then
-      vim.fn.sign_place(0, "GitSigns", "GitSignsAdd", buffer_nr, { lnum = line_nr + 1 })
-      line_nr = line_nr + 1
-    elseif line:match("^%-") then
-      vim.fn.sign_place(0, "GitSigns", "GitSignsDelete", buffer_nr, { lnum = line_nr + 1 })
-    end
-  end
+
+	local i = 1
+	local line_nr = nil
+
+	while i <= #diff_output do
+		local raw = diff_output[i]
+		local line = raw:gsub("\r?$", "")
+
+		local hunk_start = line:match("^@@.*%+([0-9]+)")
+		if hunk_start then
+			line_nr = tonumber(hunk_start) - 1
+			i = i + 1
+		elseif not line_nr then
+			i = i + 1
+		else
+			local first = line:sub(1,1)
+			if first == " " then
+				line_nr = line_nr + 1
+				i = i + 1
+
+			elseif first == "+" then
+				line_nr = line_nr + 1
+				vim.fn.sign_place(0, "GitSigns", "GitSignsAdd", buffer_nr, { lnum = line_nr })
+				i = i + 1
+
+			elseif first == "-" then
+				local next_raw = diff_output[i + 1] or ""
+				if next_raw:sub(1,1) == "+" then
+					line_nr = line_nr + 1
+					vim.fn.sign_place(0, "GitSigns", "GitSignsChange", buffer_nr, { lnum = line_nr })
+					i = i + 2 
+				else
+					local del_lnum = math.max(1, line_nr + 1)
+					vim.fn.sign_place(0, "GitSigns", "GitSignsDelete", buffer_nr, { lnum = del_lnum })
+					i = i + 1
+				end
+
+			else
+				i = i + 1
+			end
+		end
+	end
+
 end
 
 -- Blame helpers
