@@ -1,6 +1,7 @@
 -- Git related functions
 
 local M = {}
+local hunks = {}
 
 M.blame_enabled = false
 
@@ -21,6 +22,8 @@ local function update_signs()
   if not is_git_repo() then
     return
   end
+
+  hunks = {} -- Clear hunks on each update
 
   local buffer_nr = vim.api.nvim_get_current_buf()
   local filepath = vim.fn.expand("%:p")
@@ -50,6 +53,7 @@ local function update_signs()
 		local hunk_start = line:match("^@@.*%+([0-9]+)")
 		if hunk_start then
 			line_nr = tonumber(hunk_start) - 1
+			table.insert(hunks, tonumber(hunk_start))
 			i = i + 1
 		elseif not line_nr then
 			i = i + 1
@@ -198,5 +202,47 @@ function M.setup()
     callback = show_blame_for_cursor
   })
  end
+
+
+function M.next_hunk()
+  if #hunks == 0 then return end
+  local current_line = vim.api.nvim_win_get_cursor(0)[1]
+  local next_hunk_line = nil
+
+  for _, hunk_line in ipairs(hunks) do
+    if hunk_line > current_line then
+      next_hunk_line = hunk_line
+      break
+    end
+  end
+
+  if not next_hunk_line then
+    next_hunk_line = hunks[1]
+  end
+
+  vim.api.nvim_win_set_cursor(0, { next_hunk_line, 0 })
+  vim.cmd("normal! zz")
+end
+
+function M.prev_hunk()
+  if #hunks == 0 then return end
+  local current_line = vim.api.nvim_win_get_cursor(0)[1]
+  local prev_hunk_line = nil
+
+  for i = #hunks, 1, -1 do
+    local hunk_line = hunks[i]
+    if hunk_line < current_line then
+      prev_hunk_line = hunk_line
+      break
+    end
+  end
+
+  if not prev_hunk_line then
+    prev_hunk_line = hunks[#hunks]
+  end
+
+  vim.api.nvim_win_set_cursor(0, { prev_hunk_line, 0 })
+  vim.cmd("normal! zz")
+end
 
 return M
