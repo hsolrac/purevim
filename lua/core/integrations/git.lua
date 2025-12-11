@@ -11,11 +11,21 @@ local function is_git_repo()
   return git_dir ~= ""
 end
 
--- Signs
-local function setup_signs()
-  vim.fn.sign_define("GitSignsAdd", { text = "│", texthl = "GitSignsAdd" })
-  vim.fn.sign_define("GitSignsChange", { text = "│", texthl = "GitSignsChange" })
-  vim.fn.sign_define("GitSignsDelete", { text = "│", texthl = "GitSignsDelete" })
+--- @param opts { staged: { add: string, change: string, delete: string } }
+local function setup_signs(opts)
+  local defaults = {
+    staged = {
+      add = "+",
+      change = "~",
+      delete = "-"
+    }
+  }
+
+  opts = vim.tbl_deep_extend("force", defaults, opts or {})
+
+  vim.fn.sign_define("GitSignsAdd", { text = opts.staged.add, texthl = "GitSignsAdd" })
+  vim.fn.sign_define("GitSignsChange", { text = opts.staged.changes, texthl = "GitSignsChange" })
+  vim.fn.sign_define("GitSignsDelete", { text = opts.staged.delete, texthl = "GitSignsDelete" })
 end
 
 local function update_signs()
@@ -170,8 +180,11 @@ function M.toggle_blame()
   end
 end
 
-function M.setup()
-  setup_signs()
+--- @alias signs { staged: { add: string, change: string, delete: string } }
+--- @param opts? { signs: signs }
+function M.setup(opts)
+  opts = opts or {}
+  setup_signs(opts.signs)
 
   local git_augroup = vim.api.nvim_create_augroup("GitSigns", { clear = true })
 
