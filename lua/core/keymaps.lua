@@ -81,6 +81,8 @@ map("n", "<leader>tr", ":set relativenumber!<CR>", { desc = "Toggle [r]elative l
 
 -- git 
 map("n", "<leader>gb", git.toggle_blame, { desc = "Toggle inline git blame" })
+map("n", "]c", git.next_hunk, { desc = "Go to next git hunk" })
+map("n", "[c", git.prev_hunk, { desc = "Go to previous git hunk" })
 map("n", "<leader>gL", ":PureLazyGit<CR>")
 map("n", "<leader>gs", ":PureGitStatus<CR>")
 
