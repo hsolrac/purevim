@@ -1,7 +1,7 @@
 local M = {}
 
 -- Catppuccin Mocha palette (simplified)
-local colors = {
+M.colors = {
 	base = "#1e1e2e",
 	mantle = "#181825",
 	crust = "#11111b",
@@ -31,38 +31,33 @@ function M.setup()
 	vim.o.background = "dark"
 
 	-- basic highlights
-	vim.api.nvim_set_hl(0, "Normal", { fg = colors.text, bg = colors.base })
-	vim.api.nvim_set_hl(0, "Comment", { fg = colors.subtext0, italic = true })
-	vim.api.nvim_set_hl(0, "Constant", { fg = colors.peach })
-	vim.api.nvim_set_hl(0, "Identifier", { fg = colors.lavender })
-	vim.api.nvim_set_hl(0, "Function", { fg = colors.blue })
-	vim.api.nvim_set_hl(0, "Statement", { fg = colors.mauve })
-	vim.api.nvim_set_hl(0, "Type", { fg = colors.yellow })
-	vim.api.nvim_set_hl(0, "Special", { fg = colors.peach })
-	vim.api.nvim_set_hl(0, "Error", { fg = colors.red, bold = true })
-	vim.api.nvim_set_hl(0, "Todo", { fg = colors.peach, bold = true })
+	vim.api.nvim_set_hl(0, "Normal", { fg = M.colors.text, bg = M.colors.base })
+	vim.api.nvim_set_hl(0, "Comment", { fg = M.colors.subtext0, italic = true })
+	vim.api.nvim_set_hl(0, "Constant", { fg = M.colors.peach })
+	vim.api.nvim_set_hl(0, "Identifier", { fg = M.colors.lavender })
+	vim.api.nvim_set_hl(0, "Function", { fg = M.colors.blue })
+	vim.api.nvim_set_hl(0, "Statement", { fg = M.colors.mauve })
+	vim.api.nvim_set_hl(0, "Type", { fg = M.colors.yellow })
+	vim.api.nvim_set_hl(0, "Special", { fg = M.colors.peach })
+	vim.api.nvim_set_hl(0, "Error", { fg = M.colors.red, bold = true })
+	vim.api.nvim_set_hl(0, "Todo", { fg = M.colors.peach, bold = true })
 
-	vim.api.nvim_set_hl(0, "StatusLine", { fg = colors.subtext0, bg = colors.surface0 })
-	vim.api.nvim_set_hl(0, "StatusLineNC", { fg = colors.subtext0, bg = colors.surface1 })
-	vim.api.nvim_set_hl(0, "LineNr", { fg = colors.subtext0, bg = colors.base })
+	vim.api.nvim_set_hl(0, "StatusLine", { fg = M.colors.subtext0, bg = M.colors.surface0 })
+	vim.api.nvim_set_hl(0, "StatusLineNC", { fg = M.colors.subtext0, bg = M.colors.surface1 })
+	vim.api.nvim_set_hl(0, "LineNr", { fg = M.colors.subtext0, bg = M.colors.base })
 
-	vim.api.nvim_set_hl(0, "CursorLine", { bg = colors.surface0 })
+	vim.api.nvim_set_hl(0, "CursorLine", { bg = M.colors.surface0 })
 
-	vim.api.nvim_set_hl(0, "VertSplit", { fg = colors.surface0, bg = none })
-	vim.api.nvim_set_hl(0, "WinSeparator", { fg = colors.surface0, bg = none })
+	vim.api.nvim_set_hl(0, "VertSplit", { fg = M.colors.surface0, bg = none })
+	vim.api.nvim_set_hl(0, "WinSeparator", { fg = M.colors.surface0, bg = none })
 
 	-- floating windows
-	vim.api.nvim_set_hl(0, "NormalFloat", { fg = colors.text, bg = none })
-	vim.api.nvim_set_hl(0, "FloatBorder", { fg = colors.surface1, bg = none })
+	vim.api.nvim_set_hl(0, "NormalFloat", { fg = M.colors.text, bg = none })
+	vim.api.nvim_set_hl(0, "FloatBorder", { fg = M.colors.surface1, bg = none })
 
 	-- popup menus (completion, telescope, etc.)
-	vim.api.nvim_set_hl(0, "Pmenu", { fg = colors.text, bg = colors.surface0 })
-	vim.api.nvim_set_hl(0, "PmenuSel", { fg = colors.base, bg = colors.lavender })
-
-	-- git signs
-	vim.api.nvim_set_hl(0, "GitSignsAdd", { fg = colors.green })
-	vim.api.nvim_set_hl(0, "GitSignsChange", { fg = colors.yellow })
-	vim.api.nvim_set_hl(0, "GitSignsDelete", { fg = colors.red })
+	vim.api.nvim_set_hl(0, "Pmenu", { fg = M.colors.text, bg = M.colors.surface0 })
+	vim.api.nvim_set_hl(0, "PmenuSel", { fg = M.colors.base, bg = M.colors.lavender })
 end
 
 return M
