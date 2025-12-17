@@ -80,7 +80,7 @@ Clone this repository to your Neovim configuration directory:
 # Backup your existing config first if you have one
 # mv ~/.config/nvim ~/.config/nvim.backup
 
-git clone https://github.com/hsolrac/purevim.git ~/.config/nvim
+git clone https://github.com/carl0xs/purevim.git ~/.config/nvim
 ```
 
 **Step 3. Launch the Environment**
@@ -103,7 +103,7 @@ setup and dependency checks for you.
 Run the installer:
 
 ```bash 
-curl -fsSL https://raw.githubusercontent.com/hsolrac/purevim/master/bin/purevim | bash
+curl -fsSL https://raw.githubusercontent.com/carl0xs/purevim/master/bin/purevim | bash
 ```
 The script will:
 
@@ -127,7 +127,7 @@ install manually:
 
 ```bash
 mv ~/.config/nvim ~/.config/nvim.backup 2>/dev/null || true
-git clone https://github.com/hsolrac/purevim.git ~/.config/nvim
+git clone https://github.com/carl0xs/purevim.git ~/.config/nvim
 ```
 
 Then manually ensure all dependencies are installed on your system:

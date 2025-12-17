@@ -2,7 +2,7 @@
 
 set -o errexit -o pipefail -o nounset
 
-REPO_URL="https://github.com/hsolrac/purevim.git"
+REPO_URL="https://github.com/carl0xs/purevim.git"
 INSTALL_DIR="${HOME}/.config/nvim"
 
 msg() {
