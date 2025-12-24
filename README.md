@@ -180,9 +180,15 @@ keys, or defining feature toggles.
 
 ```lua -- ~/.config/nvim/early_init.lua
 
--- Set your own colorscheme option
-vim.cmd.colorscheme("retrobox")
+-- Or change the default colorscheme (see "Colorschemes" section below)
+vim.g.purevim_colorscheme = "gruvbox"
 ```
+
+> [!NOTE]
+> ### Colorschemes
+> PureVim comes with two built-in colorschemes:
+> - `catppuccin` (the default)
+> - `gruvbox`
 
 ### 2. `private.lua`
 
