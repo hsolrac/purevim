@@ -1,5 +1,4 @@
 early_init.lua
-private.lua
 post_init.lua
 
 .DS_Store
