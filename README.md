@@ -5,7 +5,6 @@ powerful external tools for a great editing experience.
 
 <img width="1912" height="1017" alt="image" src="https://github.com/user-attachments/assets/dc70f57b-cd79-42ae-87ef-21a07ca8c118" />
 
-
 ## Performance
 
 This configuration is designed to be lightweight and fast:
@@ -90,7 +89,9 @@ a shell with Neovim and all the pre-configured language servers
 (`rust-analyzer`, `lua-language-server`, `typescript-language-server`)
 available in your `PATH`.
 
-```bash cd ~/.config/nvim nix develop ```
+```bash
+cd ~/.config/nvim && nix develop
+```
 
 Now, you can run `nvim` from within this shell, and everything will work out of
 the box.
@@ -102,23 +103,24 @@ setup and dependency checks for you.
 
 Run the installer:
 
-```bash 
+```bash
 curl -fsSL https://raw.githubusercontent.com/carl0xs/purevim/master/bin/purevim | bash
 ```
+
 The script will:
 
 - Back up your existing Neovim configuration (if any) to ~/.config/nvim.backup
 - Clone this repository to ~/.config/nvim
 - Check for the required dependencies and alert you if something is missing
 - Dependencies checked by the script:
-   - nvim
-   - lazygit
-   - rg (ripgrep)
-   - fzf
-   - lua-language-server
-   - rust-analyzer
-   - typescript-language-server
-   - bat
+  - nvim
+  - lazygit
+  - rg (ripgrep)
+  - fzf
+  - lua-language-server
+  - rust-analyzer
+  - typescript-language-server
+  - bat
 
 ### 3. Manual Installation
 
@@ -143,7 +145,7 @@ Then manually ensure all dependencies are installed on your system:
 
 Once everything is ready, just launch Neovim:
 
-```bash 
+```bash
 nvim
 ```
 
@@ -158,13 +160,14 @@ customize behavior without modifying the main config. All these files are
 If you'd like to customize **PureVim**, simply create these files in the same
 folder as this config `init.lua`.
 
-1. **`early_init.lua`** → runs first, can set globals or feature toggles.
+1. **`early_init.lua`** → runs first, can set globals or feature toggles. Users
+   **SHOULD** customize this file.
 
-2. **Core config + optional `private.lua`** → loads modules conditionally based
-on feature toggles.
+2. **`init.lua`** → loads modules conditionally based on feature toggles. User
+   should **NOT** edit this file.
 
 3. **`post_init.lua`** → runs last, for final tweaks and personal
-customization.
+   customization. Users **SHOULD** customize this file.
 
 > ⚡ If a file does not exist, it is simply skipped, and the config runs
 > normally.
@@ -174,7 +177,7 @@ customization.
 - **Purpose:** Runs **before the main config**.
 
 - **Use it for:** Setting global options, overriding defaults, changing leader
-keys, or defining feature toggles.
+  keys, or defining feature toggles.
 
 - **Example:**
 
@@ -185,32 +188,42 @@ vim.g.purevim_colorscheme = "gruvbox"
 ```
 
 > [!NOTE]
+>
 > ### Colorschemes
-> PureVim comes with two built-in colorschemes:
+>
+> PureVim comes with extra colorschemes:
+>
 > - `catppuccin` (the default)
 > - `gruvbox`
 
-### 2. `private.lua`
+You can also turn `PureVim` special features on/off, or even customize its
+setup. Just comment/uncomment what you need!
 
-- **Purpose:** Optional feature toggle file, loaded by the main config.
-- **Use it for:** Turning specific features ON or OFF.
-- **Default behavior:** All features run if this file does not exist.
-- **Example:**
-
-```lua -- ~/.config/nvim/private.lua
-
-return {
-  lsp = false, -- disable LSP
-  treesitter = true, -- enable treesitter
-  colorscheme = false, -- disable custom pure vim colorscheme
+```lua
+vim.g.purevim_features = {
+	-- colorscheme = false, -- disable colorscheme
+	-- dashboard = false, -- disable dashboard
+	-- fzf = { -- configure FZF or set to false to disable
+	-- 	position = "bottom",
+	-- 	width_ratio = 1,
+	-- 	height_ratio = 0.3,
+	-- 	border = "none",
+	-- },
+	-- lsp = false, -- disable LSP
+	-- lazygit = false, -- disable lazygit
 }
 ```
+
+### 2. `init.lua`
+
+This file orchestrates how everything is loaded with `PureVim`. **DO NOT** use
+this to add your own configs. Instead use `early_init.lua` or `post_init.lua`.
 
 ### 3. `post_init.lua`
 
 - **Purpose:** Runs **after all core modules** have loaded.
 - **Use it for:** Adding personal keymaps, tweaks, custom autocommands, or
-modifying highlights after the colorscheme.
+  modifying highlights after the colorscheme.
 - **Example:**
 
 ```lua -- ~/.config/nvim/post_init.lua
@@ -246,9 +259,9 @@ Here are some folding key hints:
 
 Focus the buffer you'd like more info to and run the command:
 
-``` 
+```
 :PureCheckTreesitter
- ```
+```
 
 ## License
 
