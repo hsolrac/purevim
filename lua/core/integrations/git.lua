@@ -24,7 +24,7 @@ local function setup_signs(opts)
   opts = vim.tbl_deep_extend("force", defaults, opts or {})
 
   vim.fn.sign_define("GitSignsAdd", { text = opts.staged.add, texthl = "GitSignsAdd" })
-  vim.fn.sign_define("GitSignsChange", { text = opts.staged.changes, texthl = "GitSignsChange" })
+  vim.fn.sign_define("GitSignsChange", { text = opts.staged.change, texthl = "GitSignsChange" })
   vim.fn.sign_define("GitSignsDelete", { text = opts.staged.delete, texthl = "GitSignsDelete" })
 end
 
