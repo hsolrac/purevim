@@ -53,6 +53,9 @@ map("n", "]d", function()
 	vim.diagnostic.jump({ count = 1, float = true })
 end)
 
+map("n", "<leader>xx", vim.diagnostic.setloclist)
+map("n", "<leader>xq", vim.diagnostic.setqflist)
+
 map("n", "<leader>bx", ":bd<CR>", { desc = "Close buffer", silent = true })
 map("n", "<leader>bX", ":bufdo bd<CR>", { desc = "Close all buffers", silent = true })
 
